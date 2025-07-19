@@ -16,12 +16,6 @@ model = GPT2LMHeadModel.from_pretrained("distilgpt2").to(device)
 toy_data = data2
 
 
-'''[
-    ("Hello", "Hi there!"),
-    ("How are you?", "I’m doing well, thanks!"),
-    ("What’s your name?", "I’m just a simple chatbot."),
-    ("Goodbye", "See you later!"),
-]'''
 
 separator_token = "<|sep|>"
 tokenizer.add_special_tokens({'additional_special_tokens': [separator_token]})
@@ -100,11 +94,8 @@ prompt = "Hi, how are you?"
 text = f" {context} {separator_token} {prompt}{tokenizer.eos_token} "
 input_ids= tokenizer.encode(text,return_tensors="pt").to(device)
 
-#input__ids = input_ids["input_ids"].squeeze().to(device)
-#attention_mask=input_ids["attention_mask"].to(device)
 sample_output = model.generate(
     input_ids,
-   # attention_mask=attention_mask,
     max_new_tokens=50,
     num_return_sequences=1,
     eos_token_id=tokenizer.eos_token_id,
