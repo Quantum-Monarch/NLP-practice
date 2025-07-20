@@ -5,7 +5,7 @@ from torch.utils.data import Dataset, DataLoader
 import torch
 from torch.optim import AdamW
 from tqdm import tqdm
-from parserm import data2
+from data_parse import data2
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 tokenizer = GPT2Tokenizer.from_pretrained("distilgpt2")
@@ -63,7 +63,7 @@ loader = DataLoader(dataset, batch_size=16, shuffle=True)
 
 
 
-optimizer = AdamW(model.parameters(), lr=5e-5)
+optimizer = AdamW(model.parameters(), lr=5e-4)
 
 model.train()
 epochs = 5
@@ -90,7 +90,7 @@ for epoch in range(epochs):
 
 model.eval()
 context=""
-prompt = "Hi, how are you?"
+prompt = "what were you doing yesterday?"
 text = f" {context} {separator_token} {prompt}{tokenizer.eos_token} "
 input_ids= tokenizer.encode(text,return_tensors="pt").to(device)
 

@@ -20,8 +20,9 @@ def parse_daily_dialog(filepath):
                     pairs.append(("", prompt, response))
                 else:
                     pairs.append((context, prompt, response))
-
-                context = (context + " " + prompt).strip()
+                if utt > 3:
+                    context=context.split("|",1)[1]
+                context = (context + "|" + prompt).strip()
     return pairs
 data=parse_daily_dialog("dialogues_train.txt")
 data2=data[:5000]
